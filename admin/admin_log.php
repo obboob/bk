@@ -1,4 +1,4 @@
-<?php 
+<?php
 include dirname(__DIR__) . '/include/inc.php';
 $action =isset($_REQUEST['action'])?$_REQUEST['action']:'';
 if ($action=='operate_log') {
