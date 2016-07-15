@@ -1,0 +1,110 @@
+<?php include 'head.html';?>
+<div id="page-wrapper">
+<div class="panel-heading">
+<ul class="nav nav-tabs" role="tablist">
+<li role="presentation" ><a href="admin_log.php.htm">文章管理</a></li>
+<li role="presentation" class="active"><a href="admin_log.php-pid=draft.htm">草稿管理</a></li>
+</ul>
+</div>
+<div style="margin: 0px 15px;">
+<div class=line></div>
+<div class="filters">
+<div id="f_title" class="form-inline">
+<div style="float:left; margin-top:8px;">
+<span id="f_t_sort">
+<select name="bysort" id="bysort" onChange="selectSort(this);" style="width:120px;" class="form-control">
+<option value="" selected="selected">按分类查看...</option>
+<option value="-1" >未分类</option>
+</select>
+</span>
+<span id="f_t_tag"><a href="javascript:void(0);">按标签查看</a></span>
+</div>
+<div style="float:right;">
+<form action="http://127.0.0.1/bk/admin/admin_log.php" method="get">
+<input type="text" name="keyword" class="form-control" placeholder="搜索文章">
+<input type="hidden" id="pid" name="pid" value="draft">
+</form>
+</div>
+<div style="clear:both"></div>
+</div>
+<div id="f_tag" style="display:none;">
+标签：
+还没有标签</div>
+</div>
+<form action="admin_log.php-action=operate_log-pid=draft&token=616d6884087742629b37d276e62e7c51&operate=" method="post" name="form_log" id="form_log">
+<input type="hidden" name="pid" value="draft">
+<table class="table table-striped table-bordered table-hover dataTable no-footer">
+<thead>
+<tr>
+<th width="511" colspan="2"><b>标题</b></th>
+<th width="100"><b>作者</b></th>
+<th width="146"><b>分类</b></th>
+<th width="130"><b><a href="admin_log.php-sortDate=DESC&pid=draft">时间</a></b></th>
+<th width="49" class="tdcenter"><b><a href="admin_log.php-sortComm=ASC&pid=draft">评论</a></b></th>
+<th width="59" class="tdcenter"><b><a href="admin_log.php-sortView=ASC&pid=draft">阅读</a></b></th>
+</tr>
+</thead>
+<tbody>
+<tr><td class="tdcenter" colspan="8">还没有文章</td></tr>
+</tbody>
+</table>
+<input name="token" id="token" value="616d6884087742629b37d276e62e7c51" type="hidden" />
+<input name="operate" id="operate" value="" type="hidden" />
+<div class="list_footer form-inline">
+<a href="javascript:void(0);" id="select_all">全选</a> 选中项：
+<a href="javascript:logact('del');" class="care">删除</a> | 
+<a href="javascript:logact('pub');">发布</a>
+</div>
+</form>
+<div class="page"> (有0篇草稿)</div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+$("#f_t_tag").click(function(){$("#f_tag").toggle();$("#f_sort").hide();$("#f_user").hide();});
+selectAllToggle();
+});
+setTimeout(hideActived,2600);
+function logact(act){
+if (getChecked('ids') == false) {
+alert('请选择要操作的文章');
+return;}
+if(act == 'del' && !confirm('你确定要删除所选文章吗？')){return;}
+$("#operate").val(act);
+$("#form_log").submit();
+}
+function changeSort(obj) {
+if (getChecked('ids') == false) {
+alert('请选择要操作的文章');
+return;}
+if($('#sort').val() == '')return;
+$("#operate").val('move');
+$("#form_log").submit();
+}
+function changeAuthor(obj) {
+if (getChecked('ids') == false) {
+alert('请选择要操作的文章');
+return;}
+if($('#author').val() == '')return;
+$("#operate").val('change_author');
+$("#form_log").submit();
+}
+function changeTop(obj) {
+if (getChecked('ids') == false) {
+alert('请选择要操作的文章');
+return;}
+if($('#top').val() == '')return;
+$("#operate").val(obj.value);
+$("#form_log").submit();
+}
+function selectSort(obj) {
+window.open("./admin_log.php?sid=" + obj.value + "&pid=draft", "_self");
+}
+function selectUser(obj) {
+window.open("./admin_log.php?uid=" + obj.value + "&pid=draft", "_self");
+}
+$("#menu_draft").addClass('active');
+</script>
+<div id="footer"></div>
+</div>
+</div>
+<?php include'foot.html';?>
